@@ -38,6 +38,11 @@ class Pokedex extends React.Component {
     this.setState({ type, index: 0 });
   }
 
+  buttonClass(filteredPokemon) {
+    if (filteredPokemon.length === 1) return 'disabled-btn';
+    return 'next-btn';
+  }
+
   render() {
     const types = this.fetchTypes(this.props.pokemons);
     const filteredPokemons = this.filterPokemon(this.state.type);
@@ -49,12 +54,13 @@ class Pokedex extends React.Component {
           <Pokemon key={this.state.index} pokemon={pokemon} />
         </div>
         <div className="buttons">
-          <button key="all" onClick={() => this.handleType("All")}>
+          <button className="btn" key="all" onClick={() => this.handleType("All")}>
             All
           </button>
           {types.map((type) => {
             return (
               <button
+                className="btn"
                 id={type}
                 key={type}
                 onClick={() => this.handleType(type)}>
@@ -63,7 +69,7 @@ class Pokedex extends React.Component {
             );
           })}
         </div>
-        <button key="next" onClick={this.handleNext}>
+        <button className={this.buttonClass(filteredPokemons)} key="next" onClick={this.handleNext}>
           Próximo
         </button>
       </div>
